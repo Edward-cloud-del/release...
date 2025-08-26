@@ -1,0 +1,156 @@
+Run npm audit --audit-level moderate
+# npm audit report
+
+ajv  <6.12.3
+Severity: moderate
+Prototype Pollution in Ajv - https://github.com/advisories/GHSA-v88g-cgmw-v5xw
+fix available via `npm audit fix`
+node_modules/ajv
+  har-validator  3.3.0 - 5.1.0
+  Depends on vulnerable versions of ajv
+  node_modules/har-validator
+    request  *
+    Depends on vulnerable versions of form-data
+    Depends on vulnerable versions of har-validator
+    Depends on vulnerable versions of hawk
+    Depends on vulnerable versions of tough-cookie
+    node_modules/request
+      less  1.4.0-b1 - 2.6.1 || 2.7.2 - 3.11.3
+      Depends on vulnerable versions of request
+      node_modules/less
+
+ejs  <=3.1.9
+Severity: critical
+ejs template injection vulnerability - https://github.com/advisories/GHSA-phwq-j96m-2c2q
+ejs lacks certain pollution protection - https://github.com/advisories/GHSA-ghr5-ch3p-vcr6
+fix available via `npm audit fix --force`
+Will install docker@0.2.14, which is a breaking change
+node_modules/ejs
+  docker  >=1.0.0-alpha.1
+  Depends on vulnerable versions of dox
+  Depends on vulnerable versions of ejs
+  Depends on vulnerable versions of highlight.js
+  Depends on vulnerable versions of markdown-it
+  Depends on vulnerable versions of toc
+  node_modules/docker
+
+form-data  <2.5.4
+Severity: critical
+form-data uses unsafe random function in form-data for choosing boundary - https://github.com/advisories/GHSA-fjxv-7rqg-78g4
+fix available via `npm audit fix`
+node_modules/request/node_modules/form-data
+
+hawk  <=9.0.0
+Severity: high
+Uncontrolled Resource Consumption in Hawk - https://github.com/advisories/GHSA-44pw-h2cw-w3vq
+Depends on vulnerable versions of boom
+Depends on vulnerable versions of cryptiles
+Depends on vulnerable versions of hoek
+Depends on vulnerable versions of sntp
+fix available via `npm audit fix`
+node_modules/hawk
+
+highlight.js  9.0.0 - 10.4.0
+Severity: moderate
+ReDOS vulnerabities: multiple grammars - https://github.com/advisories/GHSA-7wwv-vh3v-89cq
+fix available via `npm audit fix`
+node_modules/highlight.js
+
+hoek  *
+Severity: high
+hoek subject to prototype pollution via the clone function. - https://github.com/advisories/GHSA-c429-5p7v-vgjp
+Prototype Pollution in hoek - https://github.com/advisories/GHSA-jp4x-w63m-7wgm
+fix available via `npm audit fix`
+node_modules/hoek
+  boom  *
+  Depends on vulnerable versions of hoek
+  node_modules/boom
+    cryptiles  *
+    Depends on vulnerable versions of boom
+    node_modules/cryptiles
+  sntp  0.0.0 || >=0.1.1
+  Depends on vulnerable versions of hoek
+  node_modules/sntp
+
+lodash  <=4.17.20
+Severity: critical
+Prototype Pollution in lodash - https://github.com/advisories/GHSA-fvqr-27wr-82fm
+Command Injection in lodash - https://github.com/advisories/GHSA-35jh-r3h4-6jhm
+Prototype Pollution in lodash - https://github.com/advisories/GHSA-4xc9-xhrj-v574
+Prototype Pollution in lodash - https://github.com/advisories/GHSA-jf85-cpcp-j695
+Regular Expression Denial of Service (ReDoS) in lodash - https://github.com/advisories/GHSA-29mw-wpgm-hmr9
+Prototype Pollution in lodash - https://github.com/advisories/GHSA-p6mc-m468-83gw
+Regular Expression Denial of Service (ReDoS) in lodash - https://github.com/advisories/GHSA-x5rq-j2xg-h7qm
+fix available via `npm audit fix`
+node_modules/jsdoctypeparser/node_modules/lodash
+node_modules/lodash
+  jsdoctypeparser  1.2.0 - 2.0.0-alpha-5
+  Depends on vulnerable versions of lodash
+  node_modules/jsdoctypeparser
+    dox  0.8.0 - 0.9.1
+    Depends on vulnerable versions of jsdoctypeparser
+    node_modules/dox
+  toc  *
+  Depends on vulnerable versions of lodash
+  Depends on vulnerable versions of slug
+  node_modules/toc
+
+markdown-it  <12.3.2
+Severity: moderate
+Uncontrolled Resource Consumption in markdown-it - https://github.com/advisories/GHSA-6vfc-qv3f-vr6c
+fix available via `npm audit fix`
+node_modules/markdown-it
+
+marked  <=4.0.9
+Severity: high
+Marked ReDoS due to email addresses being evaluated in quadratic time - https://github.com/advisories/GHSA-xf5p-87ch-gxw2
+Inefficient Regular Expression Complexity in marked - https://github.com/advisories/GHSA-rrrm-qjm4-v8hf
+Inefficient Regular Expression Complexity in marked - https://github.com/advisories/GHSA-5v2h-r2cx-5xgj
+fix available via `npm audit fix`
+node_modules/marked
+
+minimatch  <=3.0.4
+Severity: high
+Regular Expression Denial of Service in minimatch - https://github.com/advisories/GHSA-hxm2-r34f-qmc5
+minimatch ReDoS vulnerability - https://github.com/advisories/GHSA-f8q6-p94x-37v3
+fix available via `npm audit fix --force`
+Will install cod@0.1.0, which is a breaking change
+node_modules/minimatch
+  file-utils  *
+  Depends on vulnerable versions of findup-sync
+  Depends on vulnerable versions of glob
+  Depends on vulnerable versions of lodash
+  Depends on vulnerable versions of minimatch
+  node_modules/file-utils
+    cod  >=0.2.0
+    Depends on vulnerable versions of file-utils
+    node_modules/cod
+  glob  3.0.0 - 5.0.14
+  Depends on vulnerable versions of minimatch
+  node_modules/findup-sync/node_modules/glob
+  node_modules/glob
+    findup-sync  <=0.2.1
+    Depends on vulnerable versions of glob
+    node_modules/findup-sync
+
+
+slug  <=0.9.1
+Severity: moderate
+Regular Expression Denial of Service in slug - https://github.com/advisories/GHSA-jxqq-cqm6-pfq9
+fix available via `npm audit fix`
+node_modules/slug
+
+tough-cookie  <4.1.3
+Severity: moderate
+tough-cookie Prototype Pollution vulnerability - https://github.com/advisories/GHSA-72xf-g2v4-qvf3
+fix available via `npm audit fix`
+node_modules/tough-cookie
+
+26 vulnerabilities (10 moderate, 11 high, 5 critical)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+Error: Process completed with exit code 1.
