@@ -24,9 +24,12 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
+          registry-url: 'https://registry.npmjs.org'
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          npm config set registry https://registry.npmjs.org/
+          npm ci --retry=3 --timeout=60000
 
       - name: Lint JavaScript/TypeScript
         run: |
@@ -75,9 +78,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
+          registry-url: 'https://registry.npmjs.org'
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          npm config set registry https://registry.npmjs.org/
+          npm ci --retry=3 --timeout=60000
 
       - name: Run npm audit
         run: npm audit --audit-level moderate
@@ -180,9 +187,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
+          registry-url: 'https://registry.npmjs.org'
 
       - name: Install frontend dependencies
-        run: npm ci
+        run: |
+          npm config set registry https://registry.npmjs.org/
+          npm ci --retry=3 --timeout=60000
 
       - name: Setup Rust
         uses: dtolnay/rust-toolchain@stable
