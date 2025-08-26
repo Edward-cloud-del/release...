@@ -166,25 +166,6 @@ jobs:
           files: |
             src-tauri/target/${{ matrix.target }}/release/bundle/*/frame-sense_*.tar.gz
             src-tauri/target/${{ matrix.target }}/release/bundle/*/frame-sense_*.tar.gz.sig
-
-
-
-  # Update Homebrew formula (macOS)
-  update-homebrew:
-    name: Update Homebrew Formula
-    needs: [create-release, build-release]
-    runs-on: ubuntu-latest
-    if: "!contains(github.ref, '-')"  # Only for stable releases
-    
-    steps:
-      - name: Update Homebrew formula
-        uses: dawidd6/action-homebrew-bump-formula@v3
-        with:
-          token: ${{ secrets.HOMEBREW_GITHUB_TOKEN }}
-          formula: framesense
-          tag: ${{ github.ref }}
-          revision: ${{ github.sha }}
-
   # Notify release
   notify:
     name: Notify Release
