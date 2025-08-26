@@ -125,6 +125,12 @@ jobs:
             libxcb-shape0-dev \
             libxcb-xfixes0-dev
 
+      - name: Set PKG_CONFIG_PATH
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          echo "PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/lib/pkgconfig:/usr/share/pkgconfig" >> $GITHUB_ENV
+          pkg-config --list-all | grep -E "(glib|gobject)" || echo "GLib packages not found in pkg-config"
+
       - name: Cache Rust dependencies
         uses: actions/cache@v4
         with:
