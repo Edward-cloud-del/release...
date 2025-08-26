@@ -1,0 +1,35 @@
+{
+  "identifier": "desktop-capability",
+  "description": "FrameSense desktop capabilities",
+  "platforms": [
+    "macOS",
+    "windows",
+    "linux"
+  ],
+  "windows": [
+    "*"
+  ],
+  "permissions": [
+    "core:default",
+    "core:window:default",
+    "core:window:allow-start-dragging",
+    "core:webview:default",
+    "core:app:default",
+    "core:event:default",
+    "core:menu:default",
+    "core:tray:default",
+    "shell:default",
+    "notification:default",
+    "global-shortcut:default",
+    "store:default",
+    "http:default",
+    {
+      "identifier": "http:allow-fetch",
+      "allow": [
+        {
+          "url": "https://api.finalyze.pro/*"
+        }
+      ]
+    }
+  ]
+}

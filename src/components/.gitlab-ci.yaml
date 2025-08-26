@@ -1,0 +1,21 @@
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  script:
+    - echo "Build Pipeline"
+    - pnpm run build
+
+test-job: 
+  stage: build
+  echo: testing pipeline
+
+deploy-job:
+  stage: deploy
+  script:
+    - echo "Deploy Pipeline"
+    - pnpm run deploy
+only: main
+

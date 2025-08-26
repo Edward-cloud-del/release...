@@ -1,0 +1,28 @@
+{
+  "identifier": "migrated",
+  "description": "FrameSense core permissions",
+  "local": true,
+  "windows": [
+    "main"
+  ],
+  "permissions": [
+    "core:default",
+    "core:window:default",
+    "core:window:allow-start-dragging",
+    "core:webview:default",
+    "core:app:default",
+    "core:event:default",
+    "shell:default",
+    "notification:default",
+    "store:default",
+    "http:default",
+    {
+      "identifier": "http:allow-fetch",
+      "allow": [
+        {
+          "url": "https://api.finalyze.pro/*"
+        }
+      ]
+    }
+  ]
+}

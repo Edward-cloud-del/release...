@@ -1,0 +1,110 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes pulse-harmonic {
+  0%, 100% {
+    color: #d1d5db; /* text-gray-300 */
+  }
+  50% {
+    color: #f3f4f6; /* text-gray-100 */
+  }
+}
+
+.animate-pulse-harmonic {
+  animation: pulse-harmonic 1.5s cubic-bezier(0.4,0,0.6,1) infinite;
+}
+
+@keyframes pulse-thinking {
+  0%, 100% {
+    color: #9ca3af; /* text-gray-400 */
+  }
+  50% {
+    color: #1f2937; /* text-gray-800 - darker, almost black */
+  }
+}
+
+.animate-pulse-thinking {
+  animation: pulse-thinking 1.2s ease-in-out infinite;
+}
+
+/* 🎭 Smooth window entrance animation for Alt+C animated window creation */
+@keyframes window-entrance {
+  0% {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-window-entrance {
+  animation: window-entrance 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  background-color: transparent !important;
+  height: 100%;
+  /* Fast startup optimizations */
+  will-change: contents;
+  contain: layout style paint;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: transparent !important;
+  overflow: hidden;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  /* Fast startup optimizations */
+  will-change: contents;
+  contain: layout style paint;
+  /* Preload system fonts for faster initial render */
+  font-display: swap;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+  background-color: transparent !important;
+  display: flex;
+  flex-direction: column;
+  /* Fast startup optimizations */
+  will-change: contents;
+  contain: layout style paint;
+  /* Immediate visibility when shown */
+  opacity: 1;
+  transition: none;
+}
+
+/* Custom scrollbar for AI Response overflow */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+} 

@@ -1,0 +1,35 @@
+version: '3.7'
+
+services:
+  n8n:
+    image: n8nio/n8n
+    restart: always
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=admin
+      - N8N_BASIC_AUTH_PASSWORD=hemligt123
+      - N8N_HOST=n8n.local
+      - N8N_PORT=5678
+      - WEBHOOK_URL=https://n8n.local/
+    volumes:
+      - ~/.n8n:/home/node/.n8n
+    expose:
+      - "5678"
+
+  caddy:
+    image: caddy:2
+    restart: always
+    ports:
+      - "443:443"
+      - "80:80"
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - n8n
+    command: >
+      caddy reverse-proxy --from https://localhost --to n8n:5678 --internal-certs
+
+volumes:
+  caddy_data:
+  caddy_config:

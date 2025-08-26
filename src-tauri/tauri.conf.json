@@ -1,0 +1,83 @@
+{
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "windows": {
+      "certificateThumbprint": null,
+      "digestAlgorithm": "sha256",
+      "timestampUrl": ""
+    },
+    "publisher": "FrameSense",
+    "copyright": "Copyright © 2025 FrameSense",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "resources": [],
+    "externalBin": [],
+    "category": "Productivity",
+    "shortDescription": "AI-powered screen capture with instant insights",
+    "longDescription": "FrameSense is an ultra-smooth desktop app that lets you drag a selection over screen content and get instant AI-powered analysis. Perfect for text extraction, image analysis, and smart contextual responses.",
+    "macOS": {
+      "frameworks": [],
+      "minimumSystemVersion": "10.15",
+      "exceptionDomain": "",
+      "signingIdentity": null,
+      "entitlements": "src-tauri/entitlements.plist"
+    },
+    "linux": {
+      "deb": {
+        "depends": []
+      }
+    },
+    "createUpdaterArtifacts": true
+  },
+  "build": {
+    "beforeDevCommand": "pnpm start",
+    "beforeBuildCommand": "pnpm build",
+    "frontendDist": "../dist",
+    "devUrl": "http://localhost:5173"
+  },
+  "productName": "frame-sense",
+  "mainBinaryName": "frame-sense",
+  "version": "0.2.8",
+  "identifier": "com.vely.framesense",
+  "plugins": {
+    "updater": {
+      "endpoints": [
+        "https://github.com/Edward-cloud-del/Framesense/releases"
+      ],
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEMwQjM4MUUzNDlFNTc2MTMKUldRVGR1Vko0NEd6d0FsL0VMTm9ERjRJNVlSZGd2MDE1S1ZmNkNzS0oyTURNMWE3ci9MMVV2TVoK"
+    }
+  },
+  "app": {
+    "macOSPrivateApi": true,
+    "security": {
+      "csp": "default-src blob: data: filesystem: ws: wss: http: https: tauri: 'unsafe-eval' 'unsafe-inline' 'self' img-src: 'self'; connect-src ipc: http://ipc.localhost"
+    },
+    "windows": [
+      {
+        "label": "main",
+        "title": "FrameSense",
+        "width": 600,
+        "height": 80,
+        "center": true,
+        "resizable": false,
+        "decorations": false,
+        "transparent": true,
+        "visible": false,
+        "y": 191
+      }
+    ],
+    "trayIcon": {
+      "iconPath": "icons/SystemTray1.ico",
+      "iconAsTemplate": true,
+      "menuOnLeftClick": false,
+      "tooltip": "FrameSense - AI Screen Capture"
+    },
+    "withGlobalTauri": false
+  }
+}
