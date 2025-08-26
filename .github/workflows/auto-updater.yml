@@ -1,0 +1,54 @@
+name: Auto Updater
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  update-tauri-updater:
+    name: Update Tauri Updater Manifest
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get release info
+        id: release
+        run: |
+          echo "tag_name=${{ github.event.release.tag_name }}" >> $GITHUB_OUTPUT
+          echo "release_id=${{ github.event.release.id }}" >> $GITHUB_OUTPUT
+
+      - name: Update updater manifest
+        run: |
+          cat > updater-manifest.json << EOF
+          {
+            "version": "${{ steps.release.outputs.tag_name }}",
+            "notes": "${{ github.event.release.body }}",
+            "pub_date": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "platforms": {
+              "darwin-x86_64": {
+                "signature": "",
+                "url": "https://github.com/${{ github.repository }}/releases/download/${{ steps.release.outputs.tag_name }}/framesense-macos-x64-updater.tar.gz"
+              },
+              "darwin-aarch64": {
+                "signature": "",
+                "url": "https://github.com/${{ github.repository }}/releases/download/${{ steps.release.outputs.tag_name }}/framesense-macos-arm64-updater.tar.gz"
+              },
+              "windows-x86_64": {
+                "signature": "",
+                "url": "https://github.com/${{ github.repository }}/releases/download/${{ steps.release.outputs.tag_name }}/framesense-windows-x64-updater.tar.gz"
+              }
+            }
+          }
+          EOF
+
+      - name: Commit updater manifest
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add updater-manifest.json
+          git commit -m "Update updater manifest for ${{ steps.release.outputs.tag_name }}" || exit 0
+          git push
