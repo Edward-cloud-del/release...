@@ -28,11 +28,7 @@
       "signingIdentity": null,
       "entitlements": "src-tauri/entitlements.plist"
     },
-    "linux": {
-      "deb": {
-        "depends": []
-      }
-    },
+
     "createUpdaterArtifacts": true
   },
   "build": {

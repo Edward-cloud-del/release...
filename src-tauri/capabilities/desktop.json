@@ -3,8 +3,7 @@
   "description": "FrameSense desktop capabilities",
   "platforms": [
     "macOS",
-    "windows",
-    "linux"
+    "windows"
   ],
   "windows": [
     "*"

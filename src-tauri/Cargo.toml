@@ -43,9 +43,6 @@ chrono = { version = "0.4", features = ["serde"] }
 url = "2.4"
 bcrypt = "0.17.0"
 
-[target.'cfg(target_os = "linux")'.dependencies]
-dbus = "0.9"
-
 [target.'cfg(target_os = "macos")'.dependencies]
 # Native macOS overlay support for optimized pooling
 cocoa = "0.24"
