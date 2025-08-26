@@ -9,7 +9,7 @@ on:
 env:
   CARGO_TERM_COLOR: always
   RUST_BACKTRACE: 1
-
+  CARGO_PROFILE_DEV_BUILD_OVERRIDE_DEBUG: TRUE
 jobs:
   # Code Quality Checks
   lint-and-test:
