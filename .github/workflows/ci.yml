@@ -47,17 +47,7 @@ jobs:
         with:
           components: rustfmt, clippy
 
-      # --- Linux dev-packages for glib/gobject (needed for glib-sys/gobject-sys) ---
-      - name: Install Linux dependencies (Dev)
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            libglib2.0-dev \
-            pkg-config
-      - name: Verify pkg-config (GLib)
-        run: |
-          echo "PKG_CONFIG_PATH=${PKG_CONFIG_PATH}"
-          pkg-config --cflags --libs glib-2.0 gobject-2.0
+
 
       - name: Cache Rust dependencies
         uses: actions/cache@v4
@@ -154,36 +144,7 @@ jobs:
         with:
           targets: ${{ matrix.target }}
 
-      # --- Linux-only dependencies for building Tauri + GLib sys-crates ---
-      - name: Install Linux dependencies
-        if: matrix.os == 'ubuntu-latest'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            libglib2.0-dev \
-            libgobject-2.0-dev \
-            pkg-config \
-            libgtk-3-dev \
-            libwebkit2gtk-4.0-dev \
-            libappindicator3-dev \
-            librsvg2-dev \
-            patchelf \
-            libxdo-dev \
-            libxcb-shape0-dev \
-            libxcb-xfixes0-dev
 
-      - name: Verify pkg-config (GLib)
-        if: matrix.os == 'ubuntu-latest'
-        run: |
-          echo "PKG_CONFIG_PATH=${PKG_CONFIG_PATH}"
-          pkg-config --cflags --libs glib-2.0 gobject-2.0
-
-      # --- Optional: macOS helpers (safe to keep; remove if you want faster builds) ---
-      - name: Install macOS dependencies
-        if: matrix.os == 'macos-latest'
-        run: |
-          brew update || true
-          brew install glib pkg-config || true
 
       - name: Cache Rust dependencies
         uses: actions/cache@v4
@@ -236,35 +197,7 @@ jobs:
       - name: Setup Rust
         uses: dtolnay/rust-toolchain@stable
 
-      # --- Linux-only dev deps + sanity check ---
-      - name: Install Linux dependencies
-        if: matrix.os == 'ubuntu-latest'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            libglib2.0-dev \
-            libgobject-2.0-dev \
-            pkg-config \
-            libgtk-3-dev \
-            libwebkit2gtk-4.0-dev \
-            libappindicator3-dev \
-            librsvg2-dev \
-            patchelf \
-            libxdo-dev \
-            libxcb-shape0-dev \
-            libxcb-xfixes0-dev
-      - name: Verify pkg-config (GLib)
-        if: matrix.os == 'ubuntu-latest'
-        run: |
-          echo "PKG_CONFIG_PATH=${PKG_CONFIG_PATH}"
-          pkg-config --cflags --libs glib-2.0 gobject-2.0
 
-      # --- Optional: macOS helpers ---
-      - name: Install macOS dependencies
-        if: matrix.os == 'macos-latest'
-        run: |
-          brew update || true
-          brew install glib pkg-config || true
 
       - name: Cache Rust dependencies
         uses: actions/cache@v4

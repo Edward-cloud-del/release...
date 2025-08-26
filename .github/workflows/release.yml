@@ -54,7 +54,7 @@ jobs:
             ## Downloads
             - **Windows**: Download the `.msi` installer
             - **macOS**: Download the `.dmg` file  
-            - **Linux**: Download the `.AppImage` or `.deb` package
+
             
             ## Installation
             Download and install the appropriate version for your platform.
@@ -107,34 +107,7 @@ jobs:
         with:
           targets: ${{ matrix.target }}
 
-      - name: Install Linux dependencies
-        if: matrix.os == 'ubuntu-latest'
-        run: |
-            sudo apt-get update
-            sudo apt-get install -y \
-              libgtk-3-dev \
-              libwebkit2gtk-4.0-dev \
-              libayatana-appindicator3-dev \
-              librsvg2-dev \
-              libssl-dev \
-              libglib2.0-dev \
-              libgobject-2.0-dev \
-              libxdo-dev \
-              libxcb-shape0-dev \
-              libxcb-xfixes0-dev \
-              pkg-config \
-              build-essential \
-              curl \
-              wget \
-              file \
-              patchelf
-        
-
-      - name: Set PKG_CONFIG_PATH
-        if: matrix.os == 'ubuntu-latest'
-        run: |
-          echo "PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/lib/pkgconfig:/usr/share/pkgconfig" >> $GITHUB_ENV
-          pkg-config --list-all | grep -E "(glib|gobject)" || echo "GLib packages not found in pkg-config"
+      
 
       - name: Cache Rust dependencies
         uses: actions/cache@v4
@@ -151,19 +124,6 @@ jobs:
         run: npm run build:tauri -- --target ${{ matrix.target }}
 
       # Upload different file types based on OS
-      - name: Upload Linux AppImage
-        if: matrix.os == 'ubuntu-latest'
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: ${{ github.ref_name }}
-          files: src-tauri/target/${{ matrix.target }}/release/bundle/appimage/frame-sense_*.AppImage
-
-      - name: Upload Linux DEB
-        if: matrix.os == 'ubuntu-latest'
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: ${{ github.ref_name }}
-          files: src-tauri/target/${{ matrix.target }}/release/bundle/deb/frame-sense_*.deb
 
       - name: Upload Windows MSI
         if: matrix.os == 'windows-latest'
@@ -209,7 +169,7 @@ jobs:
           args: |
             🚀 **FrameSense ${{ steps.get_version.outputs.VERSION }} Released!**
             
-            📱 **Desktop Apps**: Available for Windows, macOS, and Linux
+            📱 **Desktop Apps**: Available for Windows and macOS
             📦 **Download**: https://github.com/${{ github.repository }}/releases/tag/${{ steps.get_version.outputs.VERSION }}
 
       - name: Notify Slack
