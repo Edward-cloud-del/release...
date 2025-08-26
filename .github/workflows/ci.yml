@@ -53,7 +53,6 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y \
             libglib2.0-dev \
-            libgobject-2.0-dev \
             pkg-config
       - name: Verify pkg-config (GLib)
         run: |
