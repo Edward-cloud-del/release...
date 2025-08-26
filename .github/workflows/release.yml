@@ -5,6 +5,10 @@ on:
     tags:
       - 'v*'
 
+permissions:
+  contents: write
+  packages: write
+
 env:
   CARGO_TERM_COLOR: always
   RUST_BACKTRACE: 1
@@ -38,12 +42,12 @@ jobs:
 
       - name: Create Release
         id: create_release
-        uses: actions/create-release@v1
+        uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ steps.get_version.outputs.VERSION }}
-          release_name: FrameSense ${{ steps.get_version.outputs.VERSION }}
+          name: FrameSense ${{ steps.get_version.outputs.VERSION }}
           body: |
             ${{ steps.changelog.outputs.CHANGELOG }}
             
@@ -127,70 +131,41 @@ jobs:
       # Upload different file types based on OS
       - name: Upload Linux AppImage
         if: matrix.os == 'ubuntu-latest'
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@v1
         with:
-          upload_url: ${{ needs.create-release.outputs.upload_url }}
-          asset_path: src-tauri/target/${{ matrix.target }}/release/bundle/appimage/frame-sense_*.AppImage
-          asset_name: ${{ matrix.asset_name }}.AppImage
-          asset_content_type: application/octet-stream
+          tag_name: ${{ github.ref_name }}
+          files: src-tauri/target/${{ matrix.target }}/release/bundle/appimage/frame-sense_*.AppImage
 
       - name: Upload Linux DEB
         if: matrix.os == 'ubuntu-latest'
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@v1
         with:
-          upload_url: ${{ needs.create-release.outputs.upload_url }}
-          asset_path: src-tauri/target/${{ matrix.target }}/release/bundle/deb/frame-sense_*.deb
-          asset_name: ${{ matrix.asset_name }}.deb
-          asset_content_type: application/vnd.debian.binary-package
+          tag_name: ${{ github.ref_name }}
+          files: src-tauri/target/${{ matrix.target }}/release/bundle/deb/frame-sense_*.deb
 
       - name: Upload Windows MSI
         if: matrix.os == 'windows-latest'
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@v1
         with:
-          upload_url: ${{ needs.create-release.outputs.upload_url }}
-          asset_path: src-tauri/target/${{ matrix.target }}/release/bundle/msi/frame-sense_*.msi
-          asset_name: ${{ matrix.asset_name }}.msi
-          asset_content_type: application/x-msi
+          tag_name: ${{ github.ref_name }}
+          files: src-tauri/target/${{ matrix.target }}/release/bundle/msi/frame-sense_*.msi
 
       - name: Upload macOS DMG
         if: matrix.os == 'macos-latest'
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@v1
         with:
-          upload_url: ${{ needs.create-release.outputs.upload_url }}
-          asset_path: src-tauri/target/${{ matrix.target }}/release/bundle/dmg/frame-sense_*.dmg
-          asset_name: ${{ matrix.asset_name }}.dmg
-          asset_content_type: application/x-apple-diskimage
+          tag_name: ${{ github.ref_name }}
+          files: src-tauri/target/${{ matrix.target }}/release/bundle/dmg/frame-sense_*.dmg
 
       # Generate updater artifacts for Tauri updater
       - name: Upload updater artifacts
         if: matrix.os != 'ubuntu-latest'  # Skip Linux for updater
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@v1
         with:
-          upload_url: ${{ needs.create-release.outputs.upload_url }}
-          asset_path: src-tauri/target/${{ matrix.target }}/release/bundle/*/frame-sense_*.tar.gz
-          asset_name: ${{ matrix.asset_name }}-updater.tar.gz
-          asset_content_type: application/gzip
-
-      - name: Upload updater signature
-        if: matrix.os != 'ubuntu-latest'
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ needs.create-release.outputs.upload_url }}
-          asset_path: src-tauri/target/${{ matrix.target }}/release/bundle/*/frame-sense_*.tar.gz.sig
-          asset_name: ${{ matrix.asset_name }}-updater.tar.gz.sig
-          asset_content_type: text/plain
+          tag_name: ${{ github.ref_name }}
+          files: |
+            src-tauri/target/${{ matrix.target }}/release/bundle/*/frame-sense_*.tar.gz
+            src-tauri/target/${{ matrix.target }}/release/bundle/*/frame-sense_*.tar.gz.sig
 
 
 
